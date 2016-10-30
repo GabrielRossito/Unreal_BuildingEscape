@@ -5,31 +5,32 @@
 #include "Components/ActorComponent.h"
 #include "OpenDoor.generated.h"
 
-
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BUILDINGESCAPE_API UOpenDoor : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this component's properties
 	UOpenDoor();
 
-	// Called when the game starts
 	virtual void BeginPlay() override;
-
-	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	void OpenDoor();
+	void CloseDoor();
+
 private:
-	UPROPERTY(VisibleAnywhere)
-	float openAngle = 90.f;
+	UPROPERTY(EditAnywhere)
+		float openAngle = -60.f;
 
 	UPROPERTY(EditAnywhere)
-	ATriggerVolume* pressurePlate;
+		ATriggerVolume* pressurePlate;
 
 	AActor* actorThatOpens;
 
-	void OpenDoor();
+	UPROPERTY(EditAnywhere)
+		float doorCloseDelay = 1.f;
 
+	AActor* owner;
+	float lastDoorOpenTime;
 };
