@@ -23,6 +23,11 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere)
-		float _reach = 100.f;
+	float _reach = 100.f;
 	
+	UPhysicsHandleComponent* _physicsHandle = nullptr;
+	UInputComponent* _inputComponent = nullptr;
+
+	void Grab();
+	void DesGrab();
 };

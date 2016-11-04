@@ -21,10 +21,32 @@ UGrabber::UGrabber()
 void UGrabber::BeginPlay()
 {
 	Super::BeginPlay();
-
 	UE_LOG(LogTemp, Warning, TEXT("Grabber ready!"));
+
+	_physicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
+	_inputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
+	if (_inputComponent)
+	{
+		UE_LOG(LogTemp, Error, TEXT("OK !"));
+
+		_inputComponent->BindAction("Grab", IE_Pressed, this, &UGrabber::Grab);
+		_inputComponent->BindAction("Grab", IE_Released, this, &UGrabber::DesGrab);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Missing _inputComponet!"));
+	}
 }
 
+void UGrabber::Grab()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Grabbing!"));
+}
+
+void UGrabber::DesGrab()
+{
+	UE_LOG(LogTemp, Warning, TEXT("DesGrabbing!"));
+}
 
 // Called every frame
 void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -68,7 +90,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	);
 
 	AActor* actorHit = hit.GetActor();
-	if (actorHit)
-		UE_LOG(LogTemp, Warning, TEXT("Hit:%s"), *(actorHit->GetName()));
+	//if (actorHit)
+	//	UE_LOG(LogTemp, Warning, TEXT("Hit:%s"), *(actorHit->GetName()));
 }
 
