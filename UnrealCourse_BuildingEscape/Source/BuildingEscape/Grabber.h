@@ -29,5 +29,8 @@ private:
 	UInputComponent* _inputComponent = nullptr;
 
 	void Grab();
-	void DesGrab();
+	void Release();
+	FVector GetReachLineStart();
+	FVector GetReachLineEnd();
+	const FHitResult GetFirstPhysicsBodyInReach();
 };
